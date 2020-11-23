@@ -1,5 +1,5 @@
 import os
-import redis
+# import redis
 
 from datetime import timedelta
 from flask import (Flask, render_template)
@@ -20,8 +20,8 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, 'yeabackend.sqlite'),
     )
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = ACCESS_EXPIRES
-    app.config['JWT_BLACKLIST_ENABLED'] = True
-    app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
+    # app.config['JWT_BLACKLIST_ENABLED'] = True
+    # app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
     CORS(app)
     jwt = JWTManager(app)
 
@@ -32,13 +32,13 @@ def create_app(test_config=None):
     # exist in this store, we don't know where it came from (as we are adding newly
     # created tokens to our store with a revoked status of 'false'). In this case
     # we will consider the token to be revoked, for safety purposes.
-    @jwt.token_in_blacklist_loader
-    def check_if_token_is_revoked(decrypted_token):
-        jti = decrypted_token['jti']
-        entry = revoked_store.get(jti)
-        if entry is None:
-            return True
-        return entry == 'true'
+    # @jwt.token_in_blacklist_loader
+    # def check_if_token_is_revoked(decrypted_token):
+    #     jti = decrypted_token['jti']
+    #     entry = revoked_store.get(jti)
+    #     if entry is None:
+    #         return True
+    #     return entry == 'true'
 
 
     app.config["MAIL_SERVER"] = "smtp.gmail.com"
